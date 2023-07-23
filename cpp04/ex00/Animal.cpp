@@ -37,3 +37,11 @@ std::string Animal::getType() const// getter
 void Animal::makeSound() const {
     std::cout << "Animal made a sound." << std::endl;
 }
+
+Animal &operator=(const Animal& oth)
+{
+    if(this != &oth)
+        this->type = oth.type;
+    std::cout << "Bureaucrat assignment operator called" << std::endl;
+    return(*this);
+}
