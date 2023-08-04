@@ -1,4 +1,4 @@
-NAME = Whatever
+NAME = Iter
 COMPILER = c++ -Wall -Wextra -Werror -std=c++98
 SRC = *.cpp
 
