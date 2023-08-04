@@ -12,11 +12,18 @@ class Array
 
     public:
     Array(){
-        elements = new T;
+        len = 0;
+        elements = nullptr;
         std::cout << "Array default constructor called\n";
     }
 
+    Array(unsigned int size) : len(size){
+        elements = new T[size];
+        std::cout << "Array parameter constructor called\n";
+    }
+
     Array(const Array &copy){
+        len = copy.len;
         elements = new T[len];
         for(size_t i = 0; i < copy.len; i++)
             elements[i] = copy.elements[i];
@@ -29,9 +36,9 @@ class Array
         delete[] elements;
         len = copy.len;
         elements = new T[len];
-        for(size_t i = 0; i<len; i++){
+        for(size_t i = 0; i<len; i++)
             elements[i] = copy.elements[i];
-        }
+        std::cout << "Array copy assignment operator called\n";
         return(*this);
     }
     ~Array(){
@@ -44,6 +51,11 @@ class Array
             throw Array::outOfBounds();
         return(elements[index]);
     }
+
+    unsigned int size() const{
+        return(len);
+    }
+
     class outOfBounds : public std::exception{
         public:
         const char *what() const throw(){
