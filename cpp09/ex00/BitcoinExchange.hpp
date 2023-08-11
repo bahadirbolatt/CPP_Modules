@@ -9,21 +9,10 @@ Her modülde farklı bir STL container'ı kullanılmalıdır. ex02'de iki tane k
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
-class BitcoinExchange
-{
-    private:
-        std::string fileName;
-    public:
-        BitcoinExchange();
-        BitcoinExchange(std::string filename);
-        BitcoinExchange& operator=(BitcoinExchange const &btc);
-        ~BitcoinExchange();
-
-        std::string getFileName() const;
-
-        std::map<std::string, int> data;
-        void addData();
-};
+void addData(const std::string &fileName);
+bool control(std::string line);
+void fillDb(std::map<std::string, double> &map); // eger & göndermeseydik map in bir kopyası oluşup giderdi o yüzden adres aldik.
 
 #endif

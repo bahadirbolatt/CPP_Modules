@@ -1,5 +1,5 @@
 NAME = btc
-COMPILER = c++ -Wall -Wextra -Werror -std=c++98
+COMPILER = c++ -Wall -Wextra -Werror -std=c++11 # BUNU KESİN DÜZELT!!!!!!!!!!!!!
 SRC = *.cpp
 
 all: $(NAME)

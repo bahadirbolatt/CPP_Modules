@@ -1,19 +1,13 @@
 #include "BitcoinExchange.hpp"
+#include <iostream>
+#include <fstream>
+#include <map>
 
-int main(int ac, char **av)
-{
-    std::ifstream ifs(av[1]);
-    if(ac != 2)
-        std::cerr << "Error: could not open file." << std::endl;
-    else
-    {
-        if(!ifs.is_open())
-        {
-            std::cerr << "File cannot open!" << std::endl;
-            return (1);
-        }
+int main(int ac, char **av) {
+    if (ac != 2) {
+        std::cerr << "Hata: argüman eksik!" << std::endl;
+        return 1;
     }
-    std::map<std::string, int> myDb;
-    myFunc(myDb, ifs);
-    return (0);
+    addData(av[1]);
+    return 0;
 }
