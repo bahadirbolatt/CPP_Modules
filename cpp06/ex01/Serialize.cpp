@@ -47,7 +47,7 @@ void Data::print(){
 
 uintptr_t serialize(Data* ptr){
     // std::cout << "serialize function called" << std::endl;
-    return reinterpret_cast<uintptr_t>(ptr);
+    return reinterpret_cast<long long int>(ptr);
 }
 
 Data* deserialize(uintptr_t raw){

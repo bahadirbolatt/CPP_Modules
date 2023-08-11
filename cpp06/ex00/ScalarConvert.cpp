@@ -33,7 +33,7 @@ static void convertToChar(std::string &str)
 {
     char c;
     if(str.length() == 1)
-        c = static_cast<int>(str[0]);
+        c = static_cast<char>(str[0]);
     else
         c = static_cast<int>(std::atoi(str.c_str()));
     if(isLiteral(str))
