@@ -3,6 +3,7 @@
 
 /*
 Her modülde farklı bir STL container'ı kullanılmalıdır. ex02'de iki tane kullanabiliriz.
+Bu modulde map kullandık çünkü bir line alıp key ve value'larını farklı veri tiplerinde tutabiliyoruz...
 */
 
 #include <iostream>
