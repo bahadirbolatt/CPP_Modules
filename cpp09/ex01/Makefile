@@ -1,5 +1,5 @@
 NAME = RPN
-COMPILER = c++ -Wall -Wextra -Werror -std=c++11 # BUNU KESİN DÜZELT!!!!!!!!!!!!!
+COMPILER = c++ -Wall -Wextra -Werror -std=c++98
 SRC = *.cpp
 
 all: $(NAME)

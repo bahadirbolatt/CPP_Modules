@@ -8,12 +8,11 @@
 
 int main(int ac, char **av)
 {
-    if(ac != 2){
+    if(ac != 2)
+    {
         std::cerr << "Arg error!" << std::endl;
         return (1);
     }
-    if(!valid(av[1])){
-        std::cout << "Error" << std::endl;
-        return (1);
-    }
+    std::string str = av[1];
+    rpn(str);
 }

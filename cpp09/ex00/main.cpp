@@ -5,7 +5,7 @@
 
 int main(int ac, char **av) {
     if (ac != 2) {
-        std::cerr << "Hata: argüman eksik!" << std::endl;
+        std::cerr << "Arg error!" << std::endl;
         return 1;
     }
     addData(av[1]);
