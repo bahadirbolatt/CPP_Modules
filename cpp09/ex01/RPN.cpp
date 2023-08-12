@@ -2,12 +2,10 @@
 
 bool control(std::string str)
 {
-    for(size_t i = 0; i < str.length(); i++)
-    {
-        char c = str[i];
-        if(std::isspace(c))
-            continue;
-        if(!isdigit(c) && !isOperator(c))
+    for(unsigned long i = 0; i < str.length(); i++){
+        if(std::isspace(str[i]))
+            return true;
+        else if(!isdigit(str[i]) && !isOperator(str[i]))
             return false;
     }
     return true;
@@ -38,25 +36,26 @@ int calculate(int op1, int op2, char op)
 int rpn(const std::string& str)
 {
     std::stack<int> operands;
-    std::istringstream ss(str);
-    std::string token;
+    char token;
+    unsigned int i = 0;
     if(!control(str)){
         std::cout << "Error" << std::endl;
-        return 0;
+        return INT_MIN;
     }  
-    while(ss >> token)
+    while(i < str.size())
     {
-        if(std::isdigit(token[0])){
-            operands.push(std::stoi(token));
+        token = str[i];
+        if(std::isdigit(token)){
+            operands.push(token - '0');
         }
-        else if(isOperator(token[0]))
+        else if(isOperator(token))
         {
             int op1 = operands.top(); operands.pop();
             int op2 = operands.top(); operands.pop();
-            int res = calculate(op1, op2, token[0]);
+            int res = calculate(op1, op2, token);
             operands.push(res);
         }
+        i++;
     }
-    std::cout << operands.top() << std::endl;
-    return 0;
+    return operands.top();
 }

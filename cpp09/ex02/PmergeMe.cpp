@@ -6,6 +6,15 @@ void printVector(const std::vector<int> &str){
     }
 }
 
+void printList(const std::list<int> &str){
+    std::list<int>::const_iterator it = str.begin();
+    std::list<int>::const_iterator ite = str.end();
+    while(it != ite){
+        std::cout << *it << " ";
+        it++;
+    }
+}
+
 void mergesortForVector(std::vector<int> &input, std::vector<int> &right, std::vector<int> &left){
     unsigned long i,j,k;
     for (i = 0, j = 0, k = 0; i < right.size() && j < left.size();)
@@ -23,18 +32,18 @@ void mergesortForVector(std::vector<int> &input, std::vector<int> &right, std::v
 }
 
 void mergeForVector(std::vector<int> &inputArray){
-    int inputLenght = inputArray.size();
-    if(inputLenght < 2)
+    int inputLength = inputArray.size();
+    if(inputLength < 2)
         return ;
     
-    int midIndex = inputLenght / 2;
+    int midIndex = inputLength / 2;
     std::vector<int> leftHalf(midIndex);
-    std::vector<int> rightHalf(inputLenght - midIndex);
+    std::vector<int> rightHalf(inputLength - midIndex);
 
     for(int i = 0; i < midIndex; i++){
         leftHalf[i] = inputArray[i];
     }
-    for(int i = midIndex; i < inputLenght; i++){
+    for(int i = midIndex; i < inputLength; i++){
         rightHalf[i - midIndex] = inputArray[i];
     }
 
@@ -44,25 +53,63 @@ void mergeForVector(std::vector<int> &inputArray){
     mergesortForVector(inputArray, rightHalf, leftHalf);
 }
 
-void printList(const std::list<int> &str){
-    std::list<int>::const_iterator it = str.begin();
-    std::list<int>::const_iterator ite = str.end();
-    while(it != ite){
-        std::cout << *it << " ";
-        it++;
+void mergesortForList(std::list<int> &input, std::list<int> &right, std::list<int> &left){
+    std::list<int>::iterator itInput = input.begin();
+    std::list<int>::iterator itRight = right.begin();
+    std::list<int>::iterator iteRightEnd = right.end();
+    std::list<int>::iterator itLeft = left.begin();
+    std::list<int>::iterator itLeftEnd = left.end();
+    
+    for (; itRight != iteRightEnd && itLeft != itLeftEnd;)
+    {
+        if(*itRight <= *itLeft){
+            *itInput = *itRight;
+            itRight++;
+        }
+        else{
+            *itInput = *itLeft;
+            itLeft++;
+        }
+        itInput++;
+    }
+    while(itRight != iteRightEnd){
+        *itInput = *itRight;
+        itInput++;
+        itRight++;
+    }
+    while(itLeft != itLeftEnd){
+        *itInput= *itLeft;
+        itInput++;
+        itLeft++;
     }
 }
 
-void printList(const std::list<int> &str){
-    std::list<int>::const_iterator it = str.begin();
-    std::list<int>::const_iterator ite = str.end();
-    while(it != ite){
-        std::cout << *it << " ";
-        it++;
-    }
-}
+void mergeForList(std::list<int> &inputArray)
+{
+    std::list<int>::iterator itInput = inputArray.begin();
+    int inputLength = inputArray.size();
+    if(inputLength < 2)
+        return;
+    int midIndex = inputLength / 2;
+    std::list<int> leftHalf(midIndex);
+    std::list<int> rightHalf(inputLength - midIndex);
 
-void mergeForList(std::list<int> &inputArray){
-    std::list<int>::iterator itInput1 = inputArray.begin();
-    std::list<int>::iterator itInput2 = inputArray.end();
+    std::list<int>::iterator itLeft = leftHalf.begin();
+
+    std::list<int>::iterator itRight = rightHalf.begin();
+
+    for(unsigned long i = 0; i < leftHalf.size(); i++){
+        *itLeft = *itInput;
+        itLeft++;
+        itInput++;
+    }
+    for(int i = midIndex; i < inputLength; i++){
+        *itRight = *itInput;
+        itRight++;
+        itInput++;
+    }
+    mergeForList(leftHalf);
+    mergeForList(rightHalf);
+
+    mergesortForList(inputArray, rightHalf, leftHalf);
 }

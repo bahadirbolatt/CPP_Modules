@@ -14,5 +14,6 @@ int main(int ac, char **av)
         return (1);
     }
     std::string str = av[1];
-    rpn(str);
+    if(rpn(str) != INT_MIN)
+        std::cout << rpn(str) << std::endl;
 }

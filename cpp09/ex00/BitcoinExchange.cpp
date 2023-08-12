@@ -1,12 +1,11 @@
 #include "BitcoinExchange.hpp"
 
-bool control(std::string line)
+bool control(std::string line, float number)
 {
     if(count(line.begin(), line.end(), '|') < 1){
         std::cerr << "Error: bad input => " << line << std::endl;
         return false;
     }
-    float number = std::strtof(line.substr(line.find('|') + 1, line.size()).c_str(), NULL);
     if(number < 0){
         std::cout << "Error: not a positive number." << std::endl;
         return false;
@@ -18,10 +17,10 @@ bool control(std::string line)
     return true;
 }
 
-void fillDb(std::map<std::string, double> &map)
+void fillDb(std::map<std::string, float> &map)
 {
     std::string data = "data.csv";
-    std::ifstream ifs(data.c_str());
+    std::ifstream ifs(data);
     std::string line;
     if(!ifs.is_open()){
         std::cerr << "Database cannot open!" << std::endl;
@@ -30,17 +29,15 @@ void fillDb(std::map<std::string, double> &map)
     std::getline(ifs, line);
     while(std::getline(ifs, line))
     {
-        std::istringstream iss(line);
-        std::string date, rate;
-        getline(iss, date, ',');
-        getline(iss, rate, '\0');
-        map.insert(std::make_pair(date, std::stod(rate))); // push.back()
+        std::string date = line.substr(0, line.find(','));
+        float rate = std::stof(line.substr(line.find(',') + 1, line.size()));
+        map.insert(std::make_pair(date, rate)); // push back 
     }
 }
 
 void addData(const std::string &fileName){
-    std::ifstream file(fileName.c_str());
-    std::map<std::string, double> map;
+    std::ifstream file(fileName);
+    std::map<std::string, float> map;
     fillDb(map);
     if(!file.is_open())
     {
@@ -50,28 +47,20 @@ void addData(const std::string &fileName){
     std::string line;
     std::getline(file, line); // first line
     std::string date;
-    std::string value;
-    double exchange_rate;
+    float exchange_rate;
 
     while(std::getline(file, line))
     {
-        std::istringstream iss(line); // create a stream for line parsing 
-        getline(iss, date, '|');
-        getline(iss, value);
-        exchange_rate = std::stod(value);
-        if(!control(line))
+        date = line.substr(0, line.find('|') - 1);
+        exchange_rate = std::stof(line.substr(line.find('|') + 1, line.size()));
+        if(!control(line, exchange_rate))
             continue;
-        for(std::map<std::string, double>::iterator it = map.begin(); it != map.end(); it++)
-        {
-            if(date.substr(0, date.size() - 1) == it->first){
-                std::cout << date << " => " << exchange_rate << " = " << exchange_rate * it->second << std::endl;
-                break;
-            }
-            else if(it->first > date){
-                std::cout << date << " => " << exchange_rate << " = " << exchange_rate *(--it)->second << std::endl;
-                break;
-            }
-        }
+        std::map<std::string, float>::iterator it = map.find(date);
+        std::map<std::string, float>::iterator it_equal = map.lower_bound(date);
+        if(it != map.end())
+            std::cout << date << " => " << exchange_rate << " = " << exchange_rate * it->second << std::endl;
+        else if(it_equal != map.end())
+            std::cout << date << " => " << exchange_rate << " = " << exchange_rate *(--it_equal)->second << std::endl;
     }
     file.close();
 }

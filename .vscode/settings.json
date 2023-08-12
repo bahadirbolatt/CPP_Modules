@@ -3,6 +3,9 @@
         "sstream": "cpp",
         "iosfwd": "cpp",
         "map": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "utility": "cpp"
     }
 }
